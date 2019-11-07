@@ -1,0 +1,54 @@
+*{
+
+}
+header{
+    height: 30px;
+}
+main{
+   height: 98vw;
+   width: 100%;
+display: flex;
+margin-left: 30%;
+}
+
+.explanation{
+    position: absolute;
+    display: flex;
+width: 600px;
+height: 70px;
+font-size: 25px;
+
+}
+
+.name{
+    position: absolute;
+    width: 100%;
+    height: 200px;
+    margin-top:15%;
+
+}
+.signature{
+    width: 100%;
+    height: 200px;
+    margin-top:20%;
+}
+
+.first_name{
+
+
+}
+.last_name{
+
+
+}
+.canvas{
+
+}
+
+#sign_here{
+
+
+}
+#submit{
+
+}

@@ -1,0 +1,32 @@
+
+
+{{#projects}}
+    {{#if ../title}}
+    <a class="title" href="/projects/{{directory}}">
+        {{title}}
+    </a>
+{{/if}}
+{{#if ../title-home}}
+<a class="title-home" href="/projects/{{directory}}">
+    {{title}}
+</a>
+{{/if}}
+
+{{#if ../photo}}
+<a class="small-img" href="/projects/{{directory}}">
+<img id="img-home" src="/{{directory}}/screenshot.png" alt="">
+<a/>
+{{/if}}
+
+{{#if ../image}}
+<a href="/projects/{{directory}}">
+<img id="img-description" src="/{{directory}}/screenshot.png" alt="">
+<a/>
+{{/if}}
+
+
+{{#if ../description}}
+<p>{{description}}<p>
+{{/if}}
+
+{{/projects}}
