@@ -1,17 +1,31 @@
 
+<section class="homapage">
 
+<div class="headings">
 
-
-
-<div class="name">
-<input class="first_name" type="text" name="" value="">
-<input class="last_name" type="text" name="" value="">
+    <img id="ubahn" src="ubahn.jpg" alt="">
+    <h2 id="please">Please join us for the fight against U-Bahn warming.<br><br>
+        We are sure you also dont like the sweaty boiling feelin in the <br>
+        U-Bahn during the summer. Lets get together and make DB put Air conditioning<br>
+        to change that feeling to a nice comfort one. </h2>
+        <h2>Sign our petition and make the Dream come true</h2>
 </div>
 
-<div class="signature">
+        <form class="signature" method="POST">
+            <div class="names">
 
-    <canvas id="canvas" width="400" height="150"></canvas>
-    <input class="canvas_input" type="hidden" name="" value="">
-<p class="sign_here"></p>
-<button id="submit" type="button" name="button">submit</button>
+                <input class="first_name" type="text" name="first" placeholder="first name">
+                <input class="last_name" type="text" name="last" placeholder="last name">
+            </div>
+            <canvas class="canvas" width="400" height="150"></canvas>
+            <input class="canvas_input" type="hidden" name="signature" value="">
+            <!-- <input type="hidden" name="_csrf" value="{{csrfToken}}"> -->
+            <button id="submit" type="submit" name="button">submit</button>
+        </form>
+        <img id="gif" src="giphy.gif" alt="">
+
+<div class="dialog">
+<!-- <h2>Please fill out all the information, and then click Submit</h2> -->
 </div>
+        {{>signature}}
+</section>

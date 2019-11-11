@@ -1,12 +1,8 @@
-DROP TABLE IF EXISTS actors;
-CREATE TABLE actors(
+DROP TABLE IF EXISTS signatures;
+CREATE TABLE signatures(
     id SERIAL PRIMARY KEY,
-    name VARCHAR(50) NOT NULL UNIQUE CHECK(name != ''),
-    age INT,
-    "number of oscars" INT
+    first_name VARCHAR(50) NOT NULL CHECK(first_name != ''),
+    last_name VARCHAR(50) NOT NULL CHECK(last_name != ''),
+    signature TEXT
+
 );
-INSERT INTO actors (name, age, "number of oscars") VALUES ('Leonardo DiCaprio', 41, 1);
-INSERT INTO actors (name, age, "number of oscars") VALUES ('Jennifer Lawrence', 25, 1);
-INSERT INTO actors (name, age, "number of oscars") VALUES ('Samuel L. Jackson', 67, 0);
-INSERT INTO actors (name, age, "number of oscars") VALUES ('Meryl Streep', 66, 3);
-INSERT INTO actors (name, age, "number of oscars") VALUES ('John Cho', 43, 0);

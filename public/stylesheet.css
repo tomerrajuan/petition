@@ -1,46 +1,147 @@
 * {
     box-sizing: border-box;
 }
-
-#canvas{
-    border: 4px dotted black;
-    margin-top: 5%;
+.petitionHeadline {
+    font-family: sans-serif;
+    font-size: 39px;
+    color: rgb(231, 1, 1);
+    margin-left: 1%;
 }
-.canvas_input{
-    position: absolute;
-    margin-top: 2%;
-    width: 415px;
-   height: 170px;
-   margin-left: -27%;
-}
-header{
-    height: 30px;
-}
-main{
-   height: 98vw;
-   width: 100%;
-display: flex;
-margin-left: 30%;
-}
-
-.explanation{
-    position: absolute;
+header {
     display: flex;
-width: 600px;
-height: 70px;
-font-size: 25px;
-
+    flex-direction: row;
+}
+footer {
 }
 
-.name{
-    position: absolute;
+body {
+    width: 100vw;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 70px 1fr 30px;
+    background-size: cover;
+}
+
+main {
+    height: 100vw;
     width: 100%;
-    height: 200px;
-    margin-top:15%;
+    display: flex;
+    margin-left: 30%;
+}
+/* //////// HOME PAGE //////// */
+
+.homapage {
+    height: 100%;
+    margin-top: 1%;
+    margin-left: 5%;
+    border: 2px solid black;
+    display: flex;
+    width: 85%;
+    flex-direction: column;
+    align-items: center;
+    background: #9cf196;
+}
+.headings {
+    font-family: monospace;
+    margin-bottom: 3%;
+    font-size: 14px;
+    margin-left: 25%;
+}
+
+.names {
+    margin-bottom: 15%;
+}
+.signature {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20%;
+}
+
+.first_name {
+    width: 200px;
+    text-align: center;
+    height: 35px;
+    font-size: 18px;
+    border: 2px solid black;
+}
+.last_name {
+    width: 200px;
+    margin-top: 2%;
+    text-align: center;
+    height: 35px;
+    font-size: 18px;
+    border: 2px solid black;
+}
+#submit {
+    margin-top: 3%;
+    width: 150px;
+    height: 45px;
+    align-self: center;
+    font-size: 20px;
+    margin-bottom: 9px;
+    border: 2px solid black;
 
 }
-.signature{
+.canvas {
+    border: 2px dotted black;
+    background: #fff1ac;
+}
+#ubahn {
+    margin-top: 15%;
+    height: 350px;
+    width: 340px;
+    position: absolute;
+    margin-left: -24.5%;
+    border: 4px solid black;
+}
+#dialog{
+    position: absolute;
+    visibility: hidden;
+}
+#gif{
+    position: absolute;
+    margin-left: -31.4%;
+border: 4px solid black;
+width: 340px;
+height: 220px;
+}
+
+/* thanks page */
+
+.thankyou {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5%;
+    border: 5px solid black;
+    padding: 30px 20px;
     width: 50%;
-    height: 200px;
-    margin-top:20%;
+    background: rgb(255, 255, 147);
+}
+#thankyou_message {
+    text-align: center;
+    font-family: sans-serif;
+}
+
+#seeAll_message {
+    text-align: center;
+    font-family: sans-serif;
+}
+
+#imgSig {
+    border: 3px solid red;
+    align-self: center;
+    /* margin-left: 37%; */
+    margin-top: 4%;
+    width: 30%;
+}
+#num {
+    color: red;
+    font-size: 30px;
+    /* margin-left: 49%; */
+    align-self: center;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+/* ///// Signatures page ///// */
+header{
 }
