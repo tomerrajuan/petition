@@ -5,6 +5,8 @@
     const db = require("./utils/db");
     const cookieSession = require("cookie-session");
     const { hash, compare } = require("./utils/bc");
+    const bc = require("./utils/bc");
+
     // const dialog= document.getElementById("#dialog");
     // const csurf = require("csurf");
     app.engine("handlebars", hb());
@@ -38,11 +40,11 @@
     // });
 
     app.get("/", function(req, res) {
-        res.redirect("/home");
+        res.redirect("/petition");
     });
 
-    app.get("/home", function(req, res) {
-        res.render("home", {
+    app.get("/petition", function(req, res) {
+        res.render("petition", {
             layout: "main"
 
             // helpers: {
@@ -53,7 +55,7 @@
         });
     });
 
-    app.post("/home", (req, res) => {
+    app.post("/petition", (req, res) => {
         console.log("request", req.body);
         let first_name = req.body.first;
         let last_name = req.body.last;
@@ -62,8 +64,7 @@
         //     res.redirect("/thanks");
         // } else {
         if (first_name == "" || last_name == "" || !signature) {
-            res.redirect("/home");
-            // dialog.show();
+            res.redirect("/petition");
         } else {
             db.addSignature(first_name, last_name, signature)
                 .then(results => {
@@ -80,16 +81,15 @@
 
     app.get("/thanks", function(req, res) {
         if (!req.session.sigId) {
-            res.redirect("/home");
+            res.redirect("/petition");
         } else {
             db.getSignature(req.session.sigId)
                 .then(results => {
                     console.log(results.rows.length);
-
                     res.render("thanks", {
                         layout: "main",
                         signature: results.rows[0].signature,
-                        numberOf: results.rows[0].id,
+                        numberOf: req.session.sigId,
                         first: results.rows[0].first_name,
                         last: results.rows[0].last_name
                     });
@@ -101,31 +101,93 @@
     });
 
     app.get("/signatures", function(req, res) {
-        res.render("signatures", {
-            layout: "main"
+        db.getSignature(req.session.sigId)
+            .then(rows => {
+                let list = rows;
+                res.render("signatures", {
+                    layout: "main",
 
-            // helpers: {
-            //     exclaim(text) {
-            //         return text + "returned text";
-            //     }
-            // }
+                    list
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    });
+
+    app.get("/login", function(req, res) {
+        // hash("hello").then(hashedPassword => {
+        //     console.log("hash: ", hashedPassword);
+        //     res.redirect("/thanks");
+        // });
+        res.render("login", {
+            layout: "main"
         });
     });
 
-    //should happen in the post
-    app.get("/register", function(req, res) {
-        hash("hello").then(hashedPassword => {
-            console.log("hash: ", hashedPassword);
-            res.redirect('/thanks');
-        });
-        res.render("signatures", {
-            layout: "main"
+    app.post("/login", function(req, res) {
+        let email = req.body.email;
+        let pass = req.body.password;
 
-            // helpers: {
-            //     exclaim(text) {
-            //         return text + "returned text";
-            //     }
-            // }
+        bc.getUser(email).then(result => {
+            if (result.rows.length < 1) {
+                console.log("this was true");
+                res.render("login", {
+                    layout: "main",
+                    errormessage:
+                        "oops, something went wrong, please try one more time."
+                });
+            } else {
+                let checkPass = result.rows[0].password;
+                console.log("pass is", pass);
+
+                compare(pass, checkPass)
+                    .then(match => {
+                        console.log("results are", match);
+                        if (match === true) {
+                            console.log("working");
+                            req.session.id = result.rows[0].id;
+                        } else {
+                            res.render("login", {
+                                layout: "main",
+                                errormessage:
+                                    "oops, something went wrong, please try one more time."
+                            });
+                        }
+                    })
+                    .catch(err => {
+                        res.render("login", {
+                            layout: "main",
+                            errormessage:
+                                "oops, something went wrong, please try one more time."
+                        });
+                        console.log("error", err);
+                    });
+            }
+        });
+    });
+
+    app.get("/registration", function(req, res) {
+
+        res.render("registration", {
+            layout: "main"
+        });
+    });
+
+    app.post("/registration", function(req, res) {
+        let first = req.body.first;
+        let last = req.body.last;
+        let email = req.body.email;
+        let pass = req.body.password;
+        hash(pass).then(hashedPassword => {
+            bc.addUser(first, last, email, hashedPassword).then(() => {
+                console.log("hash: ", hashedPassword);
+                // res.redirect("/thanks");
+                res.render("registration", {
+                    layout: "main"
+                });
+                console.log(first, last, email, hashedPassword);
+            });
         });
     });
 

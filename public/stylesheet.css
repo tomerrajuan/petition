@@ -105,7 +105,11 @@ border: 4px solid black;
 width: 340px;
 height: 220px;
 }
-
+#error{
+    width: 600px;
+    height: 500px;
+    position: fixed;
+}
 /* thanks page */
 
 .thankyou {
@@ -144,4 +148,37 @@ height: 220px;
 }
 /* ///// Signatures page ///// */
 header{
+}
+
+/* LOGIN PAGE */
+#log-in{
+    margin-top: 3%;
+    width: 150px;
+    height: 45px;
+    font-size: 20px;
+    border: 2px solid black;
+}
+#error_login{
+    font-family: sans-serif;
+}
+
+/* REGISTRATION PAGE */
+
+.email{
+    width: 200px;
+    margin-top: 2%;
+    height: 30px;
+    font-size: 18px;
+    border: 2px solid black;
+    padding-left: 2px;
+}
+
+.password{
+    width: 200px;
+    margin-top: 2%;
+    height: 30px;
+    font-size: 18px;
+    border: 2px solid black;
+    padding-left: 2px;
+
 }
