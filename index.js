@@ -3,11 +3,12 @@
     const app = express();
     const hb = require("express-handlebars");
     const db = require("./utils/db");
+    const up = require("./utils/up");
+
     const cookieSession = require("cookie-session");
     const { hash, compare } = require("./utils/bc");
     const bc = require("./utils/bc");
 
-    // const dialog= document.getElementById("#dialog");
     // const csurf = require("csurf");
     app.engine("handlebars", hb());
     app.set("view engine", "handlebars");
@@ -57,53 +58,52 @@
 
     app.post("/petition", (req, res) => {
         console.log("request", req.body);
-        let first_name = req.body.first;
-        let last_name = req.body.last;
+        console.log(req.session);
         let signature = req.body.signature;
-        // if (req.session.sigId) {
-        //     res.redirect("/thanks");
-        // } else {
-        if (first_name == "" || last_name == "" || !signature) {
-            res.redirect("/petition");
+        let user_id = req.session.id;
+        if (req.session.sigId) {
+            res.redirect("/thankyou");
         } else {
-            db.addSignature(first_name, last_name, signature)
+            db.addSignature(user_id, signature)
                 .then(results => {
+                    console.log(results);
                     req.session.sigId = results.rows[0].id;
-                    res.redirect("/thanks");
+
+                    res.redirect("/thankyou");
                     console.log("result", results.rows[0].id);
                 })
                 .catch(err => {
-                    console.log(err);
+                    console.log("error of petition is: ", err);
                 });
-            // }
         }
     });
 
-    app.get("/thanks", function(req, res) {
-        if (!req.session.sigId) {
-            res.redirect("/petition");
-        } else {
-            db.getSignature(req.session.sigId)
-                .then(results => {
-                    console.log(results.rows.length);
-                    res.render("thanks", {
-                        layout: "main",
-                        signature: results.rows[0].signature,
-                        numberOf: req.session.sigId,
-                        first: results.rows[0].first_name,
-                        last: results.rows[0].last_name
-                    });
-                })
-                .catch(err => {
-                    console.log(err);
+    app.get("/thankyou", function(req, res) {
+        // if (!req.session.sigId || !req.session.id) {
+        //     res.redirect("/login");
+        // } else {
+
+        db.getSignature(req.session.sigId)
+            .then(results => {
+                console.log(results.rows.length);
+                res.render("thankyou", {
+                    layout: "main",
+                    signature: results.rows[0].signature,
+                    numberOf: req.session.sigId
                 });
-        }
+            })
+            .catch(err => {
+                console.log("error of thankyou is: ", err);
+            });
+        // }
     });
 
     app.get("/signatures", function(req, res) {
-        db.getSignature(req.session.sigId)
-            .then(rows => {
-                let list = rows;
+        up.getCombined()
+            .then(result => {
+                console.log(result);
+                let list = result.rows;
+                console.log("list is ", list);
                 res.render("signatures", {
                     layout: "main",
 
@@ -143,16 +143,17 @@
 
                 compare(pass, checkPass)
                     .then(match => {
+                        req.session.user_id;
                         console.log("results are", match);
                         if (match === true) {
                             console.log("working");
                             req.session.id = result.rows[0].id;
-                        } else {
-                            res.render("login", {
-                                layout: "main",
-                                errormessage:
-                                    "oops, something went wrong, please try one more time."
-                            });
+                            if (req.session.sigId) {
+                                res.redirect("/thankyou");
+                            }
+                            if (!req.session.sigId) {
+                                res.redirect("/petition");
+                            }
                         }
                     })
                     .catch(err => {
@@ -168,7 +169,6 @@
     });
 
     app.get("/registration", function(req, res) {
-
         res.render("registration", {
             layout: "main"
         });
@@ -180,13 +180,47 @@
         let email = req.body.email;
         let pass = req.body.password;
         hash(pass).then(hashedPassword => {
+            req.session.user_id;
             bc.addUser(first, last, email, hashedPassword).then(() => {
                 console.log("hash: ", hashedPassword);
                 // res.redirect("/thanks");
-                res.render("registration", {
+                res.render("petition", {
                     layout: "main"
                 });
                 console.log(first, last, email, hashedPassword);
+            });
+        });
+    });
+
+    app.get("/", function(req, res) {
+        res.redirect("/login");
+    });
+
+    app.get("/profile", function(req, res) {
+        res.render("profile", {
+            layout: "main"
+
+            // helpers: {
+            //     exclaim(text) {
+            //         return text + "returned text";
+            //     }
+            // }
+        });
+    });
+
+    app.post("/profile", function(req, res) {
+        let user_id = req.session.id;
+        let age = req.body.age;
+        let city = req.body.city;
+        let url = req.body.url;
+        console.log("results:", user_id, age, city, url);
+        if (!user_id || !age || !city || !url) {
+            res.redirect("/petition");
+        }
+        up.addProfile(age, city, url, user_id).then(results => {
+            console.log(results);
+            res.render("petition", {
+                layout: "main"
             });
         });
     });
