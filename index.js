@@ -139,11 +139,12 @@
                 });
             } else {
                 let checkPass = result.rows[0].password;
-                console.log("pass is", pass);
+                console.log("pass is", result.rows[0]);
 
                 compare(pass, checkPass)
                     .then(match => {
-                        req.session.user_id;
+                        req.session.user_id = result.rows[0].id;
+                        console.log("user id login", req.session.user_id);
                         console.log("results are", match);
                         if (match === true) {
                             console.log("working");
@@ -182,11 +183,18 @@
         hash(pass).then(hashedPassword => {
             req.session.user_id;
             bc.addUser(first, last, email, hashedPassword).then(() => {
-                console.log("hash: ", hashedPassword);
-                // res.redirect("/thanks");
-                res.render("petition", {
-                    layout: "main"
-                });
+                if (!first && !last && !email && !pass) {
+                    res.render("registration", {
+                        layout: "main",
+                        errormessage:
+                            "oops, something went wrong, please try one more time."
+                    });
+                } else {
+                    res.render("petition", {
+                        layout: "main"
+                    });
+                }
+
                 console.log(first, last, email, hashedPassword);
             });
         });
@@ -196,34 +204,51 @@
         res.redirect("/login");
     });
 
+    // app.post("/profile", function(req, res) {
+    //     res.render("profile", {
+    //         layout: "main"
+    //
+    //         // helpers: {
+    //         //     exclaim(text) {
+    //         //         return text + "returned text";
+    //         //     }
+    //         // }
+    //     });
+    // });
+
     app.get("/profile", function(req, res) {
-        res.render("profile", {
-            layout: "main"
+        let user_id = req.session.user_id;
+        console.log("user id is: ", user_id);
 
-            // helpers: {
-            //     exclaim(text) {
-            //         return text + "returned text";
-            //     }
-            // }
-        });
-    });
-
-    app.post("/profile", function(req, res) {
-        let user_id = req.session.id;
-        let age = req.body.age;
-        let city = req.body.city;
-        let url = req.body.url;
-        console.log("results:", user_id, age, city, url);
-        if (!user_id || !age || !city || !url) {
-            res.redirect("/petition");
-        }
-        up.addProfile(age, city, url, user_id).then(results => {
-            console.log(results);
-            res.render("petition", {
-                layout: "main"
+        up.getCombined(user_id)
+            .then(info => {
+                console.log("info is: ", info);
+                res.render("profile", {
+                    layout: "main",
+                    first: info.rows[0].first,
+                    last: info.rows[0].last,
+                    email: info.rows[0].email,
+                    age: info.rows[0].age,
+                    city: info.rows[0].city,
+                    url: info.rows[0].url
+                });
+            })
+            .catch(err => {
+                console.log("error at info: ", err);
             });
-        });
+
+        up.addProfile()
+            .then(results => {
+                console.log(results);
+                res.render("petition", {
+                    layout: "main"
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            });
     });
 
-    app.listen(8080, () => console.log("running"));
+    app.listen(process.env.PORT || 8080, () => console.log("running"));
+
 })();

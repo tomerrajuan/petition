@@ -52,7 +52,7 @@ body {
     width: 70%;
     flex-direction: column;
     align-items: center;
-    background: #a6e3e9;
+    background: #60a9a6;
 }
 .headings {
     text-align: center;
@@ -279,7 +279,38 @@ body {
 }
 
 /* PROFILE PAGE */
-
+.first{
+    width: 200px;
+    height: 30px;
+    font-size: 18px;
+    border: 2px solid black;
+    padding-left: 4px;
+    margin-bottom: 5%;
+}
+.last{
+    width: 200px;
+    height: 30px;
+    font-size: 18px;
+    border: 2px solid black;
+    padding-left: 4px;
+    margin-bottom: 5%;
+}
+.email{
+    width: 200px;
+    height: 30px;
+    font-size: 18px;
+    border: 2px solid black;
+    padding-left: 4px;
+    margin-bottom: 5%;
+}
+.pass{
+    width: 200px;
+    height: 30px;
+    font-size: 18px;
+    border: 2px solid black;
+    padding-left: 4px;
+    margin-bottom: 5%;
+}
 
 .profile {
     display: flex;
@@ -314,6 +345,7 @@ body {
     height: 30px;
     border: 2px solid black;
     margin-bottom: 5%;
+    padding-left: 4px;  
 }
 #continue {
     margin-top: 3%;

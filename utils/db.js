@@ -1,5 +1,6 @@
 var spicedPg = require("spiced-pg");
-var db = spicedPg("postgres:postgres:postgres@localhost:5432/petition");
+const bcrypt = require('./bcrypt');
+var db = spicedPg(process.env.DATABASE_URL || "postgres:postgres:postgres@localhost:5432/petition");
 
 exports.addSignature = function(user_id, signature) {
     return db.query(

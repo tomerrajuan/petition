@@ -1,11 +1,32 @@
 <form class="profile" method="post">
-<h1 id="more_info">Please tell us a little more about yourself</h1>
-<input class="age" type="text" name="age" placeholder="age">
+<h1 id="more_info">Edit your profile</h1>
 
-<input class="city" type="text" name="city" placeholder="city">
+<input class="first" type="text" name="first" value="{{first}}">
 
-<input class="homepage_url" type="text" name="url">
+<input class="last" type="text" name="last" value="{{last}}">
+
+<input class="email" type="text" name="email" value="{{email}}">
+
+<input class="pass" type="text" name="pass" value="" placeholder="password">
+
+<input class="age" type="text" name="age" value="{{age}}">
+
+<input class="city" type="text" name="city" value="{{city}}">
+
+<input class="homepage_url" type="text" name="{{url}}" placeholder="link to your site">
 
 <button id="continue" type="submit" name="button">CONTINUE</button>
 
 </form>
+
+<!--  -->
+<!-- join user table with user profiles to get the info for profile page.
+if user updated first name. how do we know what to update.
+the answer is that we dont have to know it.
+we just update the information in the table even if the user didnt update anything
+ when the post request happens users will be updated.
+ the query will be:
+ if we catch an error, for example for an empty field, then we re render the page with
+ an error message.
+ for updating profiles:
+ if the user doesnt have a row in user profiles we need to insert the row to the table. -->

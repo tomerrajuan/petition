@@ -15,10 +15,11 @@ exports.getProfile = function(age, city, url, user_id) {
     ]);
 };
 
-exports.getCombined = function() {
-    return up.query(`SELECT first, last, email,age, city,url FROM users
-INNER JOIN profiles
+exports.getCombined = function(user_id) {
+    return up.query(
+        `SELECT * FROM users
+FULL OUTER JOIN profiles
 ON profiles.user_id = users.id
-INNER JOIN signatures
-ON signatures.user_id = users.id`);
+WHERE user_id =$1`,[user_id]
+    );
 };
