@@ -35,6 +35,34 @@
         next();
     });
 
+    app.use((req, res, next) => {
+        if (
+            !req.session.user_id &&
+            req.url != "/registration" &&
+            req.url != "/login"
+        ) {
+            res.redirect("/registration");
+        } else {
+            next();
+        }
+    });
+
+    // function requireUserLoggedOut(res, req, next) {
+    //     if (req.sesssion.user_id) {
+    //         res.redirect("/petition");
+    //     } else {
+    //         next();
+    //     }
+    // }
+    //
+    // function requireSignature(res, req, next) {
+    //     if (!req.sesssion.sigId) {
+    //         res.redirect("/petition");
+    //     } else {
+    //         next();
+    //     }
+    // }
+
     app.get("/", function(req, res) {
         res.redirect("/login");
     });
@@ -64,7 +92,6 @@
                     db.addUser(first, last, email, hashedPassword).then(id => {
                         console.log("id is", id);
                         req.session.user_id = id.rows[0].id;
-                        // req.session.user_id;
                         res.redirect("petition");
                     });
                 }
@@ -84,44 +111,46 @@
         let email = req.body.email;
         let pass = req.body.password;
 
-        db.getUser(email).then(result => {
-            if (result.rows.length < 1) {
-                res.render("login", {
-                    layout: "main",
-                    errormessage:
-                        "oops, something went wrong, please try one more time."
-                });
-            } else {
-                let checkPass = result.rows[0].password;
-
-                compare(pass, checkPass)
-                    .then(match => {
-                        if (match === true) {
-                            console.log("result are",result);
-                            req.session.user_id = result.rows[0].user_id;
-
-                            req.session.sigId = result.rows[0].id;
-
-                            if (req.session.user_id) {
-                                console.log("we are here");
-                                res.redirect("/thankyou");
-                            } else {
-                                res.redirect("/petition");
-                            }
-                        }
-                    })
-                    .catch(err => {
-                        res.render("login", {
-                            layout: "main",
-                            errormessage:
-                                "oops, something went wrong, please try one more time."
-                        });
-                        console.log("error", err);
+        db.getUser(email)
+            .then(result => {
+                if (result.rows.length < 1) {
+                    res.render("login", {
+                        layout: "main",
+                        errormessage:
+                            "oops, something went wrong, please try one more time."
                     });
-            }
-        }).catch(err => {
-            console.log("error while getUser",err);
-        });
+                } else {
+                    let checkPass = result.rows[0].password;
+
+                    compare(pass, checkPass)
+                        .then(match => {
+                            if (match === true) {
+                                console.log("result are", result);
+                                req.session.user_id = result.rows[0].user_id;
+
+                                req.session.sigId = result.rows[0].id;
+
+                                if (req.session.user_id) {
+                                    console.log("we are here");
+                                    res.redirect("/thankyou");
+                                } else {
+                                    res.redirect("/petition");
+                                }
+                            }
+                        })
+                        .catch(err => {
+                            res.render("login", {
+                                layout: "main",
+                                errormessage:
+                                    "oops, something went wrong, please try one more time."
+                            });
+                            console.log("error", err);
+                        });
+                }
+            })
+            .catch(err => {
+                console.log("error while getUser", err);
+            });
     });
 
     app.get("/petition", function(req, res) {
@@ -146,7 +175,6 @@
                 req.session.sigId = rows[0].id;
 
                 res.redirect("/thankyou");
-                // console.log("result", results.rows[0].id);
             })
             .catch(err => {
                 console.log("error of petition is: ", err);
@@ -154,8 +182,7 @@
     });
 
     app.get("/thankyou", function(req, res) {
-        console.log("req.session",req.session);
-        if (req.session.signature == null) {
+        if (!req.session.user_id) {
             if (!req.session.sigId) {
                 res.redirect("/login");
             }
@@ -176,22 +203,17 @@
     });
 
     app.get("/signatures", function(req, res) {
-        // let user_id = req.session.u_id;
+        console.log(req.session);
         up.getCombined()
-            .then(result => {
-                console.log(result);
+            .then(({ rows }) => {
+                console.log("results of getCombined are :", rows);
+                let list = rows;
 
-                let first = result.rows.first;
-                let last = result.rows.last;
-                let city = result.rows.city;
-                let age = result.rows.age;
+                console.log(list);
 
                 res.render("signatures", {
                     layout: "main",
-                    first: first,
-                    last: last,
-                    city: city,
-                    age: age
+                    list
                 });
             })
             .catch(err => {
@@ -199,22 +221,15 @@
             });
     });
 
+    app.get("/Unsign", function(req, res) {
+        req.session.sigId = null;
+        res.redirect("/petition");
+    });
+
     app.get("/logout", function(req, res) {
         req.session = null;
         res.redirect("/login");
     });
-
-    // app.post("/profile", function(req, res) {
-    //     res.render("profile", {
-    //         layout: "main"
-    //
-    //         // helpers: {
-    //         //     exclaim(text) {
-    //         //         return text + "returned text";
-    //         //     }
-    //         // }
-    //     });
-    // });
 
     app.get("/profile", function(req, res) {
         let user_id = req.session.user_id;
@@ -236,17 +251,75 @@
             .catch(err => {
                 console.log("error at info: ", err);
             });
+    });
 
-        up.addProfile()
-            .then(results => {
-                console.log(results);
-                res.render("petition", {
-                    layout: "main"
+    app.post("/profile", function(req, res) {
+        res.render("profile", {
+            layout: "main"
+        });
+    });
+
+    app.get("/profile/edit", function(req, res) {
+        let user_id = req.session.user_id;
+        console.log("user id is: ", user_id);
+        up.getCombined(user_id)
+            .then(info => {
+                // let list = info.rows[0];
+                console.log("info is: ", info);
+                res.render("edit", {
+                    layout: "main",
+                    first: info.rows[0].first,
+                    last: info.rows[0].last,
+                    email: info.rows[0].email,
+                    age: info.rows[0].age,
+                    city: info.rows[0].city,
+                    url: info.rows[0].url
                 });
             })
             .catch(err => {
-                console.log(err);
+                console.log("error at info: ", err);
             });
+    });
+
+    app.post("/profile/edit", function(req, res) {
+        console.log("req.body in profile", req.body);
+        let user_id = req.session.user_id;
+        console.log("req.session in profile", req.session);
+        let pass = req.body.password;
+        if (!pass == "") {
+            hash(pass).then(hashedPassword => {
+                Promise.all([
+                    up.addProfileUsersPass(
+                        req.body.first,
+                        req.body.last,
+                        req.body.eamil,
+                        hashedPassword,
+                        user_id
+                    ),
+                    up.addProfile(req.body.age, req.body.city, req.body.url, user_id)
+                ])
+                    .then(result => {
+                        console.log(result);
+                        res.redirect("/thankyou");
+                    })
+                    .catch(err => {
+                        console.log("error at hashedPasswordsend", err);
+                    });
+            });
+        } else {
+            Promise.all([
+                up.addProfileUsers(req.body.first, req.body.last, req.body.email, user_id),
+
+                up.addProfile(req.body.age, req.body.city, req.body.url, user_id)
+            ])
+                .then(results => {
+                    console.log(results);
+                    res.redirect("/thankyou");
+                })
+                .catch(err => {
+                    console.log("error at edit without pass", err);
+                });
+        }
     });
 
     app.listen(process.env.PORT || 8080, () => console.log("running"));
