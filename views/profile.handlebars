@@ -1,3 +1,6 @@
+{{>list show=true petition=true signers=true ubahn=true warming=true logout=true}}
+
+
 <form class="profile" method="post">
 <h1 id="more_info">Edit your profile</h1>
 <input class="profile_input" type="text" name="first" value="{{first}}">
@@ -8,7 +11,7 @@
 <input class="profile_input" type="text" name="email" value="{{email}}">
 <h2 class="profile_headlines">Email adress</h2>
 
-<input class="profile_input" type="text" name="pass" value="" placeholder="password">
+<input class="profile_input" type="text" name="pass" value="">
 <h2 class="profile_headlines">Password</h2>
 
 <input class="profile_input" type="text" name="age" value="{{age}}">
@@ -24,7 +27,7 @@
 </a>
 <input type="hidden" name="_csrf" value="{{csrfToken}}">
 </form>
-
+<!-- {{>list petition=false}} -->
 <!--  -->
 <!-- join user table with user profiles to get the info for profile page.
 if user updated first name. how do we know what to update.

@@ -1,12 +1,12 @@
 
+{{>list show=true signers=true ubahn=true warming=true edit=true logout=true}}
+
 <section class="homapage">
 
-<div class="headings">
 
-    <img id="ubahn" src="ubahn.jpg" alt="">
+
+    <!-- <img id="ubahn" src="ubahn.jpg" alt=""> -->
         <h2 id="please">Join the Petition to add air-condition to the S-bahn and U-bahn</h2>
-            <h2>Together we can make the Dream come true</h2>
-</div>
 
         <form class="signature" method="POST">
 
@@ -15,7 +15,8 @@
             <input type="hidden" name="_csrf" value="{{csrfToken}}">
             <button id="submit" type="submit" name="button">submit</button>
         </form>
-        <img id="gif" src="giphy.gif" alt="">
+        <h2 class="headings">Together we can make the Dream come true</h2>
+        <!-- <img id="gif" src="giphy.gif" alt=""> -->
 
 <div class="dialog">
 <!-- <h2>Please fill out all the information, and then click Submit</h2> -->

@@ -8,7 +8,7 @@
     const cookieSession = require("cookie-session");
     const { hash, compare } = require("./utils/db");
 
-    // const csurf = require("csurf");
+    const csurf = require("csurf");
     app.engine("handlebars", hb());
     app.set("view engine", "handlebars");
     app.use(express.static("./public"));
@@ -26,11 +26,11 @@
         })
     );
 
-    // app.use(csurf());
+    app.use(csurf());
 
     app.use(function(req, res, next) {
         res.set("x-frame-options", "DENY");
-        // res.locals.csrfToken = req.csrfToken();
+        res.locals.csrfToken = req.csrfToken();
         // req.locals.firstname = req.session.firstname
         next();
     });
@@ -183,33 +183,38 @@
 
     app.get("/thankyou", function(req, res) {
         if (!req.session.user_id) {
-            if (!req.session.sigId) {
-                res.redirect("/login");
-            }
+            res.redirect("/login");
         } else {
             db.getSignature(req.session.sigId)
-                .then(results => {
-                    console.log(results.rows.length);
-                    res.render("thankyou", {
-                        layout: "main",
-                        signature: results.rows[0].signature,
-                        numberOf: req.session.sigId
-                    });
+                .then(signature => {
+                    up.selectCount()
+                        .then(count => {
+                            console.log(
+                                "results thank you",
+                                req.session,
+                                signature,count
+                            );
+                            res.render("thankyou", {
+                                layout: "main",
+                                signature: signature.rows[0].signature,
+                                numberOf: count.rows[0].count
+                            });
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        });
                 })
                 .catch(err => {
-                    console.log("error of thankyou is: ", err);
+                    console.log("error at edit without pass", err);
                 });
         }
     });
 
     app.get("/signatures", function(req, res) {
-        console.log(req.session);
         up.getCombined()
             .then(({ rows }) => {
                 console.log("results of getCombined are :", rows);
                 let list = rows;
-
-                console.log(list);
 
                 res.render("signatures", {
                     layout: "main",
@@ -221,8 +226,23 @@
             });
     });
 
-    app.get("/Unsign", function(req, res) {
+    app.get("/signatures/:cities", function(req, res) {
+        const { cities } = req.params;
+        console.log("we are at",req.params);
+        up.getSignersCity(cities).then(results => {
+            let list = results.rows;
+            console.log("getSignersByCity result: ", results.rows);
+            res.render("cities", {
+                layout: "main",
+                list
+            });
+        });
+    });
+
+    app.get("/unsign", function(req, res) {
         req.session.sigId = null;
+        console.log(req.session);
+        up.deleteSignature(req.session.user_id);
         res.redirect("/petition");
     });
 
@@ -235,7 +255,7 @@
         let user_id = req.session.user_id;
         console.log("user id is: ", user_id);
 
-        up.getCombined(user_id)
+        up.getCombinedProfile(user_id)
             .then(info => {
                 console.log("info is: ", info);
                 res.render("profile", {
@@ -262,7 +282,7 @@
     app.get("/profile/edit", function(req, res) {
         let user_id = req.session.user_id;
         console.log("user id is: ", user_id);
-        up.getCombined(user_id)
+        up.getCombinedProfile(user_id)
             .then(info => {
                 // let list = info.rows[0];
                 console.log("info is: ", info);
@@ -296,7 +316,12 @@
                         hashedPassword,
                         user_id
                     ),
-                    up.addProfile(req.body.age, req.body.city, req.body.url, user_id)
+                    up.addProfile(
+                        req.body.age,
+                        req.body.city,
+                        req.body.url,
+                        user_id
+                    )
                 ])
                     .then(result => {
                         console.log(result);
@@ -308,12 +333,22 @@
             });
         } else {
             Promise.all([
-                up.addProfileUsers(req.body.first, req.body.last, req.body.email, user_id),
+                up.addProfileUsers(
+                    req.body.first,
+                    req.body.last,
+                    req.body.email,
+                    user_id
+                ),
 
-                up.addProfile(req.body.age, req.body.city, req.body.url, user_id)
+                up.addProfile(
+                    req.body.age,
+                    req.body.city,
+                    req.body.url,
+                    user_id
+                )
             ])
-                .then(results => {
-                    console.log(results);
+                .then(result => {
+                    console.log(result);
                     res.redirect("/thankyou");
                 })
                 .catch(err => {

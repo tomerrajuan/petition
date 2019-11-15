@@ -1,32 +1,18 @@
+{{#if show}}
+<header>
+    {{#if ubahn}}<h1 class="petitionHeadline">U-Bahn</h1>{{/if}}
+      {{#if warming}}<h1 class="petitionHeadline2">Warming!</h1>{{/if}}
 
+<div class="links">
 
-{{#projects}}
-    {{#if ../title}}
-    <a class="title" href="/projects/{{directory}}">
-        {{title}}
-    </a>
+                {{#if petition}}<a href="/petition">Petition</a>{{/if}}
+                {{#if signers}}<a href="/signatures">Signers</a>{{/if}}
+                {{#if edit}}<a href="/profile">Edit</a>{{/if}}
+                {{#if register}}<a href="/register">Register</a></li>{{/if}}
+                {{#if logout}}<a href="/login">Log out</a></li>{{/if}}
+
+            </div>
+
+</header>
+​
 {{/if}}
-{{#if ../title-home}}
-<a class="title-home" href="/projects/{{directory}}">
-    {{title}}
-</a>
-{{/if}}
-
-{{#if ../photo}}
-<a class="small-img" href="/projects/{{directory}}">
-<img id="img-home" src="/{{directory}}/screenshot.png" alt="">
-<a/>
-{{/if}}
-
-{{#if ../image}}
-<a href="/projects/{{directory}}">
-<img id="img-description" src="/{{directory}}/screenshot.png" alt="">
-<a/>
-{{/if}}
-
-
-{{#if ../description}}
-<p>{{description}}<p>
-{{/if}}
-
-{{/projects}}

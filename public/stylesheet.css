@@ -11,15 +11,18 @@
 }
 .petitionHeadline {
     font-family: sans-serif;
-    font-size: 50px;
-    margin-left: 16%;
+    font-size: 40px;
+    margin-left: 8%;
     color: #126293;
+    text-decoration: underline;
 }
 .petitionHeadline2 {
     font-family: sans-serif;
-    font-size: 50px;
+    font-size: 40px;
     color: rgb(231, 1, 1);
     margin-left: 1%;
+    text-decoration: underline;
+
 }
 #attention{
     height: 110px;
@@ -29,11 +32,22 @@
 }
 header {
     display: flex;
+    width: 100vw;
     flex-direction: row;
-    margin-left: 5%;
-    margin-top: 1%;
+    padding-left: 5%;
+    margin-top: 2%;
 }
-
+.links{
+    margin-top: -1%;
+    margin-left: auto;
+    margin-right: 5%;
+    align-items: flex-end;
+}
+.links a{
+    font-size: 20px;
+    margin-left:10px;
+    font-family: monospace;
+}
 body {
     width: 100vw;
     display: grid;
@@ -45,24 +59,37 @@ body {
 /* //////// petition PAGE //////// */
 
 .homapage {
-    height: 130%;
+    height: 80%;
     margin-top: 3%;
     margin-left: 5%;
-    border: 2px solid black;
+    border: 4px solid black;
     display: flex;
-    width: 70%;
+    width: 65%;
     flex-direction: column;
-    align-items: center;
-    background: #60a9a6;
+    align-items: flex-start;
+    background-image: url("bvg.jpg");
+background-size: cover;
+    background-repeat: round;
 }
 .headings {
     text-align: center;
-    font-family: monospace;
-    margin-bottom: 3%;
-    font-size: 17px;
-    margin-left: 25%;
+    font-family: sans-serif;
+    margin-top: 7%;
+    margin-bottom: 0%;
+    font-style: italic;
+    font-size: 35px;
+    color: #FEFE00;
 }
-
+#please{
+    text-align: center;
+    font-family: sans-serif;
+    margin-top: 4%;
+    margin-left: 19%;
+    margin-bottom: 3%;
+    font-size: 31px;
+    color: #FEFE00;
+    width: 50%;
+}
 .names {
     margin-bottom: 15%;
 }
@@ -73,21 +100,7 @@ body {
     height:340px;
 }
 
-.first_name {
-    width: 200px;
-    text-align: center;
-    height: 35px;
-    font-size: 18px;
-    border: 2px solid black;
-}
-.last_name {
-    width: 200px;
-    margin-top: 2%;
-    text-align: center;
-    height: 35px;
-    font-size: 18px;
-    border: 2px solid black;
-}
+
 #submit {
     margin-top: 3%;
     width: 150px;
@@ -98,45 +111,31 @@ body {
     border: 2px solid black;
 }
 .canvas {
-    border: 2px dotted black;
-    background: #fff1ac;
+    border: 3px dotted black;
+    background: #fbfbfb;
+    opacity: 0.9;
 }
-#ubahn {
-    margin-top: 14.5%;
-    height: 450px;
-    width: 340px;
-    position: absolute;
-    margin-left: -43.6%;
-    border: 4px solid black;
-}
-#dialog {
-    position: absolute;
-    visibility: hidden;
-}
-#gif {
-    position: absolute;
-    margin-left: -26.1%;
-    border: 4px solid black;
-    width: 340px;
-    height: 220px;
-}
+
+
 #error {
     width: 600px;
     height: 500px;
     position: fixed;
 }
-/* thanks page */
+/* thankyou page */
 
 .thankyou {
+    border-radius: 5px;
     display: flex;
+   box-shadow: 4px 4px 4px black;
+   background: #c2e8ce;
+   border: 1px solid black;
+   height: 400px;
     flex-direction: column;
-    margin-top: 5%;
-    margin-left: 33%;
-
-    border: 5px solid black;
+    margin-top: 3%;
+    margin-left: 2%;
     padding: 30px 20px;
-    width: 50%;
-    background: rgb(255, 255, 147);
+    width: 45%;
 }
 #thankyou_message {
     text-align: center;
@@ -151,14 +150,12 @@ body {
 #imgSig {
     border: 3px solid red;
     align-self: center;
-    /* margin-left: 37%; */
     margin-top: 4%;
     width: 30%;
 }
 #num {
     color: red;
     font-size: 30px;
-    /* margin-left: 49%; */
     align-self: center;
     margin-top: 1%;
     margin-bottom: 1%;
@@ -171,17 +168,19 @@ body {
     flex-direction: column;
     padding-left: 5%;
     margin-top: 5%;
-    margin-left: 33%;
+    margin-left: 2%;
+
     height: 480px;
     width: 550px;
-    background: rgb(255, 255, 147);
-    border: 5px solid black;
+    box-shadow: 4px 4px 4px black;
+    background: #c2e8ce;
+    border: 1px solid black;
 }
 .email-login{
     width: 200px;
     height: 30px;
     font-size: 18px;
-    border: 2px solid black;
+    border: 1px solid black;
     padding-left: 4px;
     margin-bottom: 5%;
 
@@ -216,11 +215,13 @@ body {
     flex-direction: column;
     padding-left: 5%;
     margin-top: 5%;
-    margin-left: 33%;
+    margin-left: 2%;
+
     height: 550px;
     width: 550px;
-    background: rgb(255, 255, 147);
-    border: 5px solid black;
+    box-shadow: 4px 4px 4px black;
+    background: #c2e8ce;
+    border: 1px solid black;
 }
 #log-in {
     margin-top: 3%;
@@ -296,9 +297,10 @@ body {
     display: flex;
     flex-direction: column;
     padding-left: 5%;
-    margin-top: 5%;
-    margin-left: 33%;
-    height: 650px;
+    margin-top: 3%;
+    margin-left: 2%;
+
+    height: 600px;
     width: 550px;
     background: #ffffc5;
     border: 5px solid black;
@@ -315,7 +317,7 @@ body {
 }
 
 #continue {
-    margin-top: 3%;
+    margin-top: -1%;
     width: 170px;
     height: 45px;
     font-size: 20px;
@@ -330,10 +332,25 @@ body {
        margin-left: -15%;
 }
 /* signature page */
-
+.signatures {
+    display: flex;
+    height: 100vw;
+    flex-direction: column;
+    margin-top: 3%;
+    margin-left: 2%;
+    padding: 30px 20px;
+    width: 45%;
+    box-shadow: 4px 4px 4px black;
+    background: #c2e8ce;
+    border: 1px solid black;
+}
 #other_signers{
-    font-size: 30px;
+    font-size: 22px;
     margin-top: 5%;
+    margin-left: 1%;
+    text-decoration: underline;
+    font-family: sans-serif;
+
 }
 #signers_info{
     font-size: 22px;

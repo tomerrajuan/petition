@@ -1,8 +1,10 @@
-<section class="description-container">
-<h2 id="other_signers">Here are the other people who wants to make the change come true</h2>
+{{>list show=true petition=true ubahn=true warming=true edit=true register=true logout=true}}
+
+<section class="signatures">
+<h2 id="other_signers">Here are the others who wanna make the change</h2>
 {{#list}}
 
-    <p id="signers_info"> {{first}} {{last}}, {{age}} from {{city}}</p>
+    <p id="signers_info"> {{first}} {{last}} {{age}} <a href="/signatures/{{city}}"> {{city}}</a></p>
 
 
 {{/list}}
