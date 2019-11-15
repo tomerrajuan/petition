@@ -1,105 +1,75 @@
 * {
     box-sizing: border-box;
+    background-color: #f4efd3;
 }
-#logout{
-    height: 40px;
-    width: 110px;
 
-}
-#button{
-    margin-left: 35%;
-}
-.petitionHeadline {
-    font-family: sans-serif;
-    font-size: 40px;
-    margin-left: 8%;
-    color: #126293;
-    text-decoration: underline;
-}
-.petitionHeadline2 {
-    font-family: sans-serif;
-    font-size: 40px;
-    color: rgb(231, 1, 1);
-    margin-left: 1%;
-    text-decoration: underline;
-
-}
-#attention{
-    height: 110px;
-    width: 310px;
-    margin-top: -1%;
-
-}
 header {
     display: flex;
     width: 100vw;
     flex-direction: row;
     padding-left: 5%;
-    margin-top: 2%;
 }
-.links{
-    margin-top: -1%;
+.links {
+    margin-top: 0.5%;
     margin-left: auto;
     margin-right: 5%;
     align-items: flex-end;
 }
-.links a{
-    font-size: 20px;
-    margin-left:10px;
+.links a {
+    font-size: 25px;
+    margin-left: 10px;
     font-family: monospace;
-}
-body {
-    width: 100vw;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 70px 1fr 30px;
-    background-size: cover;
+    text-shadow: -1px 2px 1px hsl(0, 0%, 82%);
+    color: black;
 }
 
 /* //////// petition PAGE //////// */
 
 .homapage {
-    height: 80%;
-    margin-top: 3%;
-    margin-left: 5%;
-    border: 4px solid black;
+    height: 45vw;
+    margin-top: 0%;
+    border: 1px solid black;
+    border-radius: 5px;
     display: flex;
-    width: 65%;
+    width: 96%;
+    margin-left: 2%;
     flex-direction: column;
     align-items: flex-start;
     background-image: url("bvg.jpg");
-background-size: cover;
+    background-size: cover;
     background-repeat: round;
 }
 .headings {
-    text-align: center;
     font-family: sans-serif;
-    margin-top: 7%;
-    margin-bottom: 0%;
     font-style: italic;
-    font-size: 35px;
-    color: #FEFE00;
+    margin-top: 10%;
+    font-size: 30px;
+    background-color: hsl(0, 0%, 40%);
+    letter-spacing: 0.15em;
+    color: hsl(0, 0%, 94%);
+    text-shadow: -1px 2px 1px hsl(0, 0%, 52%);
+    color: black;
 }
-#please{
+#please {
     text-align: center;
+    text-shadow: -1px 2px 1px hsl(0, 0%, 52%);
     font-family: sans-serif;
-    margin-top: 4%;
-    margin-left: 19%;
+    margin-top: 3%;
+    margin-left: 10%;
     margin-bottom: 3%;
-    font-size: 31px;
-    color: #FEFE00;
-    width: 50%;
+    font-size: 54px;
+    color: yellow;
+    width: 80%;
+    text-shadow: -1px 2px 1px hsl(0, 0%, 52%);
 }
-.names {
-    margin-bottom: 15%;
-}
+
 .signature {
     display: flex;
     flex-direction: column;
-    margin-left: 24%;
-    height:340px;
+    margin-left: 36.5%;
+    margin-top: 2%;
+    height: 340px;
 }
-
 
 #submit {
     margin-top: 3%;
@@ -111,11 +81,11 @@ background-size: cover;
     border: 2px solid black;
 }
 .canvas {
-    border: 3px dotted black;
+    border: 1px solid black;
+    border-radius: 5px;
     background: #fbfbfb;
-    opacity: 0.9;
+    opacity: 0.85;
 }
-
 
 #error {
     width: 600px;
@@ -127,10 +97,10 @@ background-size: cover;
 .thankyou {
     border-radius: 5px;
     display: flex;
-   box-shadow: 4px 4px 4px black;
-   background: #c2e8ce;
-   border: 1px solid black;
-   height: 400px;
+    box-shadow: 4px 4px 4px black;
+    background: #c2e8ce;
+    border: 1px solid black;
+    height: 400px;
     flex-direction: column;
     margin-top: 3%;
     margin-left: 2%;
@@ -162,30 +132,41 @@ background-size: cover;
 }
 
 /* LOGIN PAGE */
-
+.loginHeadline {
+    font-family: sans-serif;
+    margin-left: 2%;
+    margin-top: 3%;
+    text-shadow: -1px 2px 1px hsl(0, 0%, 52%);
+}
+#pleaseLogin {
+    font-family: sans-serif;
+    color: white;
+    text-shadow: -1px 2px 1px hsl(0, 0%, 52%);
+    background: none;
+}
 .login {
     display: flex;
     flex-direction: column;
     padding-left: 5%;
-    margin-top: 5%;
+    margin-top: 2%;
     margin-left: 2%;
-
-    height: 480px;
+    border-radius: 5px;
+    height: 550px;
     width: 550px;
     box-shadow: 4px 4px 4px black;
-    background: #c2e8ce;
+    background-image: url("fridge.jpg");
+    background-size: cover;
     border: 1px solid black;
 }
-.email-login{
+.email-login {
     width: 200px;
     height: 30px;
     font-size: 18px;
-    border: 1px solid black;
+    border: 2px solid black;
     padding-left: 4px;
     margin-bottom: 5%;
-
 }
-.password{
+.password {
     width: 200px;
     height: 30px;
     font-size: 18px;
@@ -204,8 +185,10 @@ background-size: cover;
 #error_login {
     font-family: sans-serif;
 }
-#noAccount{
+#noAccount {
     font-size: 20px;
+    color: white;
+    background: none;
 }
 
 /* REGISTRATION PAGE */
@@ -216,11 +199,14 @@ background-size: cover;
     padding-left: 5%;
     margin-top: 5%;
     margin-left: 2%;
+    border-radius: 5px;
 
-    height: 550px;
+    height: 600px;
     width: 550px;
     box-shadow: 4px 4px 4px black;
-    background: #c2e8ce;
+    background-image: url("firefighter.jpg");
+    background-size: cover;
+
     border: 1px solid black;
 }
 #log-in {
@@ -234,19 +220,10 @@ background-size: cover;
 #error_login {
     font-family: sans-serif;
 }
-#noAccount{
+#noAccount {
     font-size: 20px;
 }
-.first_name{
-    width: 200px;
-    height: 30px;
-    font-size: 18px;
-    border: 2px solid black;
-    padding-left: 2px;
-    margin-bottom: 5%;
-
-}
-.last_name{
+.first_name {
     width: 200px;
     height: 30px;
     font-size: 18px;
@@ -254,16 +231,23 @@ background-size: cover;
     padding-left: 2px;
     margin-bottom: 5%;
 }
-.email-registration{
+.last_name {
+    width: 200px;
+    height: 30px;
+    font-size: 18px;
+    border: 2px solid black;
+    padding-left: 2px;
+    margin-bottom: 5%;
+}
+.email-registration {
     width: 280px;
     height: 35px;
     font-size: 18px;
     border: 2px solid black;
     padding-left: 4px;
     margin-bottom: 5%;
-
 }
-.password-registration{
+.password-registration {
     width: 280px;
     height: 35px;
     font-size: 18px;
@@ -279,21 +263,33 @@ background-size: cover;
     margin-bottom: 9px;
     border: 2px solid black;
 }
-#HaveAnAccount{
-    font-size: 20px;
-
+#HaveAnAccount {
+    font-size: 24px;
+    background: none;
+    color: white;
+    font-family: sans-serif;
+    font-weight: bold;
+    margin-top: 10px;
+}
+#sign {
+    font-family: sans-serif;
+    color: white;
+    text-shadow: -1px 2px 1px hsl(0, 0%, 52%);
+    background: none;
 }
 /* PROFILE PAGE */
 
-.profile_headlines{
+.profile_headlines {
     margin-top: -4.5%;
-    margin-left:-25%;
+    margin-left: -25%;
     font-family: sans-serif;
     font-size: 18px;
     text-align: center;
 }
 
 .profile {
+    border-radius: 5px;
+
     display: flex;
     flex-direction: column;
     padding-left: 5%;
@@ -303,9 +299,9 @@ background-size: cover;
     height: 600px;
     width: 550px;
     background: #ffffc5;
-    border: 5px solid black;
+    border: 2px solid black;
 }
-.profile_input{
+.profile_input {
     width: 200px;
     height: 30px;
     font-size: 18px;
@@ -313,7 +309,6 @@ background-size: cover;
     border: 2px solid black;
     padding-left: 4px;
     margin-bottom: 5%;
-
 }
 
 #continue {
@@ -325,11 +320,11 @@ background-size: cover;
     margin-left: 60%;
     border: 2px solid black;
 }
-#more_info{
-       font-size: 30px;
-       margin-bottom:7%;
-       font-family: sans-serif;
-       margin-left: -15%;
+#more_info {
+    font-size: 30px;
+    margin-bottom: 7%;
+    font-family: sans-serif;
+    margin-left: -15%;
 }
 /* signature page */
 .signatures {
@@ -340,20 +335,20 @@ background-size: cover;
     margin-left: 2%;
     padding: 30px 20px;
     width: 45%;
+    border-radius: 5px;
+
     box-shadow: 4px 4px 4px black;
     background: #c2e8ce;
     border: 1px solid black;
 }
-#other_signers{
+#other_signers {
     font-size: 22px;
     margin-top: 5%;
     margin-left: 1%;
     text-decoration: underline;
     font-family: sans-serif;
-
 }
-#signers_info{
+#signers_info {
     font-size: 22px;
     font-family: sans-serif;
-
 }
