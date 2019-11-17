@@ -35,17 +35,17 @@
         next();
     });
 
-    app.use((req, res, next) => {
-        if (
-            !req.session.user_id &&
-            req.url != "/registration" &&
-            req.url != "/login"
-        ) {
-            res.redirect("/registration");
-        } else {
-            next();
-        }
-    });
+    // app.use((req, res, next) => {
+    //     if (
+    //         !req.session.user_id &&
+    //         req.url != "/registration" &&
+    //         req.url != "/login"
+    //     ) {
+    //         res.redirect("/registration");
+    //     } else {
+    //         next();
+    //     }
+    // });
 
     // function requireUserLoggedOut(res, req, next) {
     //     if (req.sesssion.user_id) {
