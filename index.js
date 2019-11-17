@@ -16,8 +16,8 @@
     ////////////// SECURITY AND COOKIES //////////////
     app.use(
         cookieSession({
-            maxAge: 1000 * 60 * 60 * 24 * 14,
-            secret: "sessionSecret"
+            secret: "sessionSecret",
+            maxAge: 1000 * 60 * 60 * 24 * 14
         })
     );
     app.use(
@@ -30,7 +30,7 @@
 
     app.use(function(req, res, next) {
         res.set("x-frame-options", "DENY");
-        res.locals.csrfToken = req.csrfToken();
+        res.locals.csrfToken = req.csrfToken;
         // req.locals.firstname = req.session.firstname
         next();
     });
