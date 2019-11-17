@@ -64,7 +64,7 @@
     // }
 
     app.get("/", function(req, res) {
-        res.redirect("/login");
+        res.redirect("/registration");
     });
 
     app.get("/registration", function(req, res) {
@@ -92,6 +92,7 @@
                     db.addUser(first, last, email, hashedPassword).then(id => {
                         console.log("id is", id);
                         req.session.user_id = id.rows[0].id;
+                        console.log("cookie is",id.rows[0].id);
                         res.redirect("/petition");
                     });
                 }
@@ -113,6 +114,7 @@
 
         db.getUser(email)
             .then(result => {
+                console.log("we are at results",result.rows.length);
                 if (result.rows.length < 1) {
                     res.render("login", {
                         layout: "main",
@@ -201,6 +203,8 @@
 
     app.post("/petition", (req, res) => {
         console.log("request", req.body);
+        console.log("request", req.session);
+
         let user_id = req.session.user_id;
         let signature = req.body.signature;
 
