@@ -1,10 +1,10 @@
 {{>list show=true petition=true edit=true logout=true}}
 
 <section class="signatures">
-<h2 id="other_signers">Here are the others who wanna make the change</h2>
+<h2 id="other_signers">Here are the other signers who wanna make a change:</h2>
 {{#list}}
 
-    <p id="signers_info"> {{first}} {{last}} {{age}} <a href="/signatures/{{city}}"> {{city}}</a></p>
+    <p id="signers_info"> {{first}} {{last}} {{age}} <a id="cityLink" href="/signatures/{{city}}"> {{city}}</a></p>
 
 
 {{/list}}

@@ -92,7 +92,7 @@
                     db.addUser(first, last, email, hashedPassword).then(id => {
                         console.log("id is", id);
                         req.session.user_id = id.rows[0].id;
-                        res.redirect("petition");
+                        res.redirect("/petition");
                     });
                 }
             })
@@ -153,6 +153,41 @@
             });
     });
 
+    // app.get("/more-info", function(req, res) {
+    //     let user_id = req.session.user_id;
+    //     if (req.session.profileAdded) {
+    //         res.redirect("/petition");
+    //         // let url= req.body.url;
+    //         // if (!url.startsWith("https://")){
+    //         //     url = "https://" + req.body.url;
+    //     } else {
+    //         console.log("user id is: ", user_id);
+    //         res.render("more-info", {
+    //             layout: "main"
+    //         });
+    //     }
+    // });
+    //
+    // app.post("/more-info", function(req, res) {
+    //     let user_id = req.session.user_id;
+    //
+    //     console.log("req.session in more-info", req.session);
+    //     console.log("more-info body", req.body.url);
+    //     if (req.body.age == "") {
+    //         req.body.age == null;
+    //     up.addProfile(req.body.age, req.body.city, req.body.url, user_id)
+    //         .then(result => {
+    //             console.log("results on more info are ", result);
+    //             req.session.profileAdded = "added";
+    //         })
+    //         .catch(err => {
+    //             console.log("error at more-info post req", err);
+    //         });
+    //     }
+    //     res.redirect("/petition");
+    //
+    // });
+
     app.get("/petition", function(req, res) {
         if (req.session.sigId) {
             console.log("session: ", req.session);
@@ -192,7 +227,8 @@
                             console.log(
                                 "results thank you",
                                 req.session,
-                                signature,count
+                                signature,
+                                count
                             );
                             res.render("thankyou", {
                                 layout: "main",
@@ -228,7 +264,7 @@
 
     app.get("/signatures/:cities", function(req, res) {
         const { cities } = req.params;
-        console.log("we are at",req.params);
+        console.log("we are at", req.params);
         up.getSignersCity(cities).then(results => {
             let list = results.rows;
             console.log("getSignersByCity result: ", results.rows);

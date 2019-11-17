@@ -1,0 +1,18 @@
+{{>list show=true petition=true signers=true logout=true}}
+
+<form class="more-info" method="post">
+<h1 id="more_info">Please give us a bit more info about yourself</h1>
+
+<input class="profile_input" type="text" name="age" value="{{age}}">
+<h2 class="profile_headlines">Age</h2>
+
+<input class="profile_input" type="text" name="city" value="{{city}}">
+<h2 class="profile_headlines">City</h2>
+
+<input class="profile_input" type="url" name="url" value="{{url}}">
+<h2 class="profile_headlines">Homepage</h2>
+
+    <button id="continue-more" type="submit" name="button">continue</button>
+
+<input type="hidden" name="_csrf" value="{{csrfToken}}">
+</form>
