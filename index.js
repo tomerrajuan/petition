@@ -93,7 +93,7 @@
                         console.log("id is", id);
                         req.session.user_id = id.rows[0].id;
                         console.log("cookie is",id.rows[0].id);
-                        res.redirect("/more-info");
+                        res.redirect("/petition");
                     });
                 }
             })
@@ -136,7 +136,7 @@
                                     console.log("we are here");
                                     res.redirect("/thankyou");
                                 } else {
-                                    res.redirect("/more-info");
+                                    res.redirect("/petition");
                                 }
                             }
                         })
@@ -155,39 +155,39 @@
             });
     });
 
-    app.get("/more-info", function(req, res) {
-        let user_id = req.session.user_id;
-        if (req.session.profileAdded) {
-            res.redirect("/petition");
-            // let url= req.body.url;
-            // if (!url.startsWith("https://")){
-            //     url = "https://" + req.body.url;
-        } else {
-            console.log("user id is: ", user_id);
-            res.render("more-info", {
-                layout: "main"
-            });
-        }
-    });
-
-    app.post("/more-info", function(req, res) {
-        let user_id = req.session.user_id;
-
-        console.log("req.session in more-info", req.session);
-        console.log("more-info body", req.body.url);
-
-        up.addProfile(req.body.age || null, req.body.city, req.body.url, user_id)
-            .then(result => {
-                console.log("results on more info are ", result);
-                req.session.profileAdded = "added";
-            })
-            .catch(err => {
-                console.log("error at more-info post req", err);
-            });
-
-        res.redirect("/petition");
-
-    });
+    // app.get("/more-info", function(req, res) {
+    //     let user_id = req.session.user_id;
+    //     if (req.session.profileAdded) {
+    //         res.redirect("/petition");
+    //         // let url= req.body.url;
+    //         // if (!url.startsWith("https://")){
+    //         //     url = "https://" + req.body.url;
+    //     } else {
+    //         console.log("user id is: ", user_id);
+    //         res.render("more-info", {
+    //             layout: "main"
+    //         });
+    //     }
+    // });
+    //
+    // app.post("/more-info", function(req, res) {
+    //     let user_id = req.session.user_id;
+    //
+    //     console.log("req.session in more-info", req.session);
+    //     console.log("more-info body", req.body.url);
+    //
+    //     up.addProfile(req.body.age || null, req.body.city, req.body.url, user_id)
+    //         .then(result => {
+    //             console.log("results on more info are ", result);
+    //             req.session.profileAdded = "added";
+    //         })
+    //         .catch(err => {
+    //             console.log("error at more-info post req", err);
+    //         });
+    //
+    //     res.redirect("/petition");
+    //
+    // });
 
     app.get("/petition", function(req, res) {
         if (req.session.sigId) {
