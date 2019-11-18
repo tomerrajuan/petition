@@ -175,9 +175,8 @@
 
         console.log("req.session in more-info", req.session);
         console.log("more-info body", req.body.url);
-        if (req.body.age == "") {
-            req.body.age == null;
-        up.addProfile(req.body.age, req.body.city, req.body.url, user_id)
+
+        up.addProfile(req.body.age || null, req.body.city, req.body.url, user_id)
             .then(result => {
                 console.log("results on more info are ", result);
                 req.session.profileAdded = "added";
@@ -185,7 +184,7 @@
             .catch(err => {
                 console.log("error at more-info post req", err);
             });
-        }
+
         res.redirect("/petition");
 
     });
