@@ -357,7 +357,7 @@
                         user_id
                     ),
                     up.addProfile(
-                        req.body.age,
+                        req.body.age || null,
                         req.body.city,
                         req.body.url,
                         user_id
@@ -381,7 +381,7 @@
                 ),
 
                 up.addProfile(
-                    req.body.age,
+                    req.body.age  || null,
                     req.body.city,
                     req.body.url,
                     user_id
