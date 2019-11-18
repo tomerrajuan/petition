@@ -1,6 +1,5 @@
 var spicedPg = require("spiced-pg");
-var up = spicedPg("postgres:postgres:postgres@localhost:5432/petition");
-
+const up = spicedPg(process.env.DATABASE_URL || "postgres:postgres:postgres@localhost:5432/petition");
 exports.addProfile = function(age, city, url, user_id) {
     return up.query(
         "INSERT INTO profiles (age, city, url, user_id) VALUES ($1, $2, $3, $4) RETURNING id",
